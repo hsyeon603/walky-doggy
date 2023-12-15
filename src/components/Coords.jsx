@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useMap } from 'react-leaflet';
+import { useMap, useMapEvents } from 'react-leaflet';
 
-export default function Coords({ lat, lon }) {
-  const [currCoords, setCurrCoords] = useState({ lat: 0, lon: 0 });
+export default function Coords({ updateCoords }) {
   const map = useMap();
-
-  useEffect(() => {
-    setCurrCoords({ lat: lat, lon: lon });
-    map.setView([lat, lon]);
-  }, [lat, lon]);
+  map.locate({ watch: true, setView: true });
+  map.on('locationfound', (location) => {
+    console.log('location found:', location);
+    updateCoords(map.getCenter());
+  });
 
   return null;
 }
