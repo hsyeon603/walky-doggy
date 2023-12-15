@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react';
 import { Polyline } from 'react-leaflet';
 
 export default function WalkingPath({ coords }) {
-  const [coordsGroup, setCoordsGroup] = useState([
-    [51.505, -0.09],
-    [51.51, -0.1],
-    [51.51, -0.12],
-  ]);
+  const [coordsGroup, setCoordsGroup] = useState([coords]);
 
   const updateCoordsGroup = (newCoords) => {
     setCoordsGroup((group) => [newCoords, ...group]);
@@ -15,6 +11,10 @@ export default function WalkingPath({ coords }) {
   useEffect(() => {
     updateCoordsGroup(coords);
   }, []);
+
+  useEffect(() => {
+    console.log('coords:', coordsGroup);
+  }, [coordsGroup]);
 
   return <Polyline positions={coordsGroup} />;
 }

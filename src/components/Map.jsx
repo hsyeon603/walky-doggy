@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, Circle, Polyline } from 'react-
 import Coords from './Coords.jsx';
 import '../styles/leaflet.css';
 import WalkingPath from './WalkingPath.jsx';
+import RecordButton from './RecordButton.jsx';
 
 export default function Map() {
   const [coords, setCoords] = useState([0, 0]);
@@ -11,6 +12,10 @@ export default function Map() {
 
   const updateCoords = (newCoords) => {
     setCoords(() => newCoords);
+  };
+  const toggleRecording = () => {
+    setIsRecording((current) => !current);
+    console.log('change:', isRecording);
   };
 
   return (
@@ -23,6 +28,7 @@ export default function Map() {
         />
         {isRecording && <WalkingPath coords={coords} />}
       </MapContainer>
+      <RecordButton handleClick={toggleRecording} isRecording={isRecording} />
     </div>
   );
 }
